@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <h1>Throttling in Js</h1>
+        <input type="text" id="name">
+        <button>Submit</button>
+    </form>
+
+    <div>
+
+    </div>
+
+    <script>
+        let form = document.querySelector('form')
+        let div = document.querySelector('div')
+
+        form.addEventListener("submit",throtling())
+
+        function handleSubmit(e){
+            e.preventDefault()
+            let nameBox = document.querySelector('#name').value;
+            let h = document.createElement('h1')
+            h.innerText = nameBox;
+            h.style.border = "2px solid blue"
+            div.append(h)
+        }
+
+        function throtling(){
+            let flag = true;
+            let btn = document.querySelector('button')
+            console.log(flag)
+            return (e)=>{
+                
+                if(flag == true){
+                    handleSubmit(e)
+                    btn.disabled = true
+                    flag = false
+                    console.log(flag)
+
+                    setTimeout(()=>{
+                        flag = true;
+                        btn.disabled = false
+                        console.log(flag)
+                    },5000)
+                }
+            }
+        }
+    </script>
+</body>
+</html>
