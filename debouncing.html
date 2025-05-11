@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <h1>Debouncing In JS</h1>
+        <input type="text" id="name">
+        <button>Submit</button>
+    </form>
+
+    <div>
+
+    </div>
+
+    <script>
+        let form = document.querySelector('form')
+        let div = document.querySelector('div')
+        let btn = document.querySelector("button")
+        form.addEventListener("submit",debouncing())
+
+        function handleSubmit(e){
+            e.preventDefault()
+            let nameBox = document.querySelector('#name').value;
+            let h = document.createElement('h1')
+            h.innerText = nameBox;
+            h.style.border = "2px solid blue"
+            btn.style.backgroundColor = "green"
+            div.append(h)
+        }
+
+        function debouncing(){
+            let flag = true
+            console.log(true)
+            let setTimeoutID = null
+            return (e)=>{
+                e.preventDefault()
+                clearTimeout(setTimeoutID)
+                btn.style.backgroundColor = "red"
+                btn.style.value = "submitting..."
+                setTimeoutID = setTimeout(()=>{
+                   
+                    handleSubmit(e)
+                },5000)
+            }
+
+        }
+    </script>
+</body>
+</html>
