@@ -3,54 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Throttling in JS</title>
 </head>
 <body>
     <form>
-        <h1>Throttling in Js</h1>
+        <h1>Throttling in JS</h1>
         <input type="text" id="name">
-        <button>Submit</button>
+        <button type="submit">Submit</button>
     </form>
 
-    <div>
-
-    </div>
+    <div></div>
 
     <script>
-        let form = document.querySelector('form')
-        let div = document.querySelector('div')
+        const form = document.querySelector('form');
+        const div = document.querySelector('div');
 
-        form.addEventListener("submit",throtling())
-
-        function handleSubmit(e){
-            e.preventDefault()
-            let nameBox = document.querySelector('#name').value;
-            let h = document.createElement('h1')
+        function handleSubmit(e) {
+            e.preventDefault();
+            const nameBox = document.querySelector('#name').value;
+            const h = document.createElement('h1');
             h.innerText = nameBox;
-            h.style.border = "2px solid blue"
-            div.append(h)
+            h.style.border = "2px solid blue";
+            div.append(h);
         }
 
-        function throtling(){
+        function throttling() {
             let flag = true;
-            let btn = document.querySelector('button')
-            console.log(flag)
-            return (e)=>{
-                
-                if(flag == true){
-                    handleSubmit(e)
-                    btn.disabled = true
-                    flag = false
-                    console.log(flag)
+            const btn = document.querySelector('button');
+            return function(e) {
+                if (flag) {
+                    handleSubmit(e);
+                    flag = false;
+                    btn.disabled = true;
 
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         flag = true;
-                        btn.disabled = false
-                        console.log(flag)
-                    },5000)
+                        btn.disabled = false;
+                    }, 5000); // 5-second throttle
                 }
-            }
+            };
         }
+
+        // Create throttled handler and attach it
+        const throttledHandler = throttling();
+        form.addEventListener("submit", throttledHandler);
     </script>
 </body>
 </html>

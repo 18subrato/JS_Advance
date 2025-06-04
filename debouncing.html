@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Debounce Form</title>
 </head>
 <body>
     <form>
         <h1>Debouncing In JS</h1>
         <input type="text" id="name">
-        <button>Submit</button>
+        <button type="submit">Submit</button>
     </form>
 
-    <div>
-
-    </div>
+    <div></div>
 
     <script>
         let form = document.querySelector('form')
         let div = document.querySelector('div')
         let btn = document.querySelector("button")
-        form.addEventListener("submit",debouncing())
 
         function handleSubmit(e){
             e.preventDefault()
@@ -32,22 +29,22 @@
             div.append(h)
         }
 
-        function debouncing(){
-            let flag = true
-            console.log(true)
-            let setTimeoutID = null
-            return (e)=>{
+        function debouncing(fn, delay){
+            let timeoutID;
+            return function(e){
                 e.preventDefault()
-                clearTimeout(setTimeoutID)
+                clearTimeout(timeoutID);
                 btn.style.backgroundColor = "red"
-                btn.style.value = "submitting..."
-                setTimeoutID = setTimeout(()=>{
-                   
-                    handleSubmit(e)
-                },5000)
-            }
-
+                btn.textContent = "Submitting..."
+                timeoutID = setTimeout(() => {
+                    fn(e);
+                    btn.textContent = "Submit"
+                }, delay);
+            };
         }
+
+        const debouncedSubmit = debouncing(handleSubmit, 5000);
+        form.addEventListener("submit", debouncedSubmit);
     </script>
 </body>
 </html>
